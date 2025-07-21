@@ -2,6 +2,7 @@ import Button from "./Button";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getStringedDate } from "../util/get-stringed-date";
+import "./Editor.css";
 
 const Editor = ({ initData, onSubmit }) => {
   const [input, setInput] = useState({
@@ -76,11 +77,11 @@ const Editor = ({ initData, onSubmit }) => {
         <p style={{color: 'red'}}>{scoreSum != 0 ? " 점수 합계가 맞지 않습니다." : ""}</p>
       </section>
       <section className="button_section">
-        <Button onClick={() => nav(-1)} text={"취소하기"} />
+        <Button onClick={() => nav(-1)} type="danger" text={"취소하기"} />
         <Button
           onClick={onSubmitButtonClick}
           text={"기록 등록"}
-          type={"POSITIVE"}
+          type="primary"
         />
       </section>
     </div>

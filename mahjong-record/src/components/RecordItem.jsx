@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import Button from "./Button";
+import './RecordItem.css';
+
 /*
 하나의 일기 항목을 화면에 카드 형태로 보여주고,
 클릭 시 일기 상세 페이지로 이동하거나,
@@ -17,7 +19,7 @@ const RecordItem = ({ id, createdDate, gameType, eastName, eastScore, southName,
   };
 
   return (
-    <div className="DiaryItem">
+    <div className="RecordItem">
       <div onClick={goRecordPage}>
         대국 번호 : {id}, 대국 타입 : {gameType}
       </div>
@@ -34,7 +36,7 @@ const RecordItem = ({ id, createdDate, gameType, eastName, eastScore, southName,
           </div>
       </div>
       <div className="button_section">
-        <Button onClick={goEditPage} text={"수정하기"} />
+        <Button onClick={goEditPage} text={"수정하기"} type="secondary"/>
       </div>
     </div>
   );

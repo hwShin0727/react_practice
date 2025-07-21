@@ -33,12 +33,13 @@ const Record = () => {
       <Header
         title={`대국 번호 : ${id}번, 대국 일자 : ${playDate}, ${gameType}`}
         leftChild={
-          <Button onClick={() => nav(-1)} text={"< 뒤로 가기"} />
+          <Button onClick={() => nav(-1)} text={"< 뒤로 가기"} type="secondary"/>
         }
         rightChild={
           <Button
             onClick={() => nav(`/edit/${params.id}`)}
             text={"기록 수정하기"}
+            type="primary"
           />
         }
       />

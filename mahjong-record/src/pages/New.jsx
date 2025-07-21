@@ -30,7 +30,7 @@ const New = () => {
       <Header
         title={"기록 등록하기"}
         leftChild={
-          <Button onClick={() => nav(-1)} text={"< 뒤로 가기"} />
+          <Button onClick={() => nav(-1)} text={"< 뒤로 가기"} type="secondary"/>
         }
       />
       <Editor onSubmit={onSubmit} />

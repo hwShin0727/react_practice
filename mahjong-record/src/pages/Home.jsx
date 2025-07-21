@@ -62,10 +62,9 @@ const Home = () => {
         title={`${pivotDate.getFullYear()}년 ${
           pivotDate.getMonth() + 1
         }월 대국 기록`}
-        leftChild={<Button onClick={onDecreaseMonth} text={"<"} />}
-        rightChild={<Button onClick={onIncreaseMonth} text={">"} />}
+        leftChild={<Button onClick={onDecreaseMonth} type="secondary" text={"<"} />}
+        rightChild={<Button onClick={onIncreaseMonth} type="secondary" text={">"} />}
       />
-      <h2>대국기록 목록</h2>
       <RecordList data={monthlyData} />
       {/* 데이터베이스 연동 부분 */}
       {records.map(d => (

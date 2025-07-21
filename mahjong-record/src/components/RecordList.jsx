@@ -2,6 +2,7 @@ import Button from "./Button";
 import RecordItem from "./RecordItem";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import './RecordList.css';
 
 //일기들을 정렬 선택 메유, 새 일기 쓰기를 제공하는 컴포넌트
 const RecordList = ({ data }) => {
@@ -29,7 +30,7 @@ const RecordList = ({ data }) => {
 
 
     return (
-        <div className="DiaryList">
+        <div className="RecordList">
             <div className="menu_bar">
                 <select value={sortType} onChange={onChangeSortType}>
                     <option value={"latest"}>최신순</option>
@@ -38,7 +39,7 @@ const RecordList = ({ data }) => {
                 <Button
                     onClick={() => nav("/new")}
                     text={"기록 등록하기"}
-                    type={"POSITIVE"}
+                    type="primary"
                 />
             </div>
             <div className="list_wrapper">

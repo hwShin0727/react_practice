@@ -1,3 +1,5 @@
+import './Viewer.css';
+
 const Viewer = ({ content }) => {
   
   return (

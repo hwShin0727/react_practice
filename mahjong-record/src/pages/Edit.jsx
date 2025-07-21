@@ -46,17 +46,17 @@ const Edit = () => {
   };
 
   return (
-    <div>
+    <div className="EditPageWrap">
       <Header
         title={"기록 수정"}
         leftChild={
-          <Button onClick={() => nav(-1)} text={"< 뒤로 가기"} />
+          <Button onClick={() => nav(-1)} text={"< 뒤로 가기"} type="secondary" />
         }
         rightChild={
           <Button
             onClick={onClickDelete}
             text={"기록 삭제"}
-            type={"NEGATIVE"}
+            type="danger"
           />
         }
       />
