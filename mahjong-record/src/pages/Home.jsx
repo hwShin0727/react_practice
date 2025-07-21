@@ -65,10 +65,9 @@ const Home = () => {
         leftChild={<Button onClick={onDecreaseMonth} text={"<"} />}
         rightChild={<Button onClick={onIncreaseMonth} text={">"} />}
       />
+      <h2>대국기록 목록</h2>
       <RecordList data={monthlyData} />
       {/* 데이터베이스 연동 부분 */}
-      
-      <h2>대국기록 목록</h2>
       {records.map(d => (
         <div key={d.id}>{d.createdDate}</div>
       ))}

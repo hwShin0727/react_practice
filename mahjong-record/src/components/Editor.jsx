@@ -41,9 +41,9 @@ const Editor = ({ initData, onSubmit }) => {
   const onSubmitButtonClick = () => {
     onSubmit(input);
   };
-  
-  let scoreSum = input.eastScore + input.southScore + input.westScore + input.northScore - 120000; 
 
+  const scoreSum = Number(input.eastScore) + Number(input.southScore) + Number(input.westScore) + Number(input.northScore) - 120000;
+  
   return (
     <div className="Editor">
       <section className="date_section">
@@ -65,14 +65,15 @@ const Editor = ({ initData, onSubmit }) => {
       <section className="content_section">
         <h4>대국 결과</h4>
         <p>동가 : <input type = "text" value = {input.eastName} name="eastName" onChange={onChangeInput}/>, 
-        점수 : <input type = "text" value = {input.eastScore} name = "eastScore" onChange={onChangeInput}/></p>
+        점수 : <input type = "number" step="1" value = {input.eastScore} name = "eastScore" onChange={onChangeInput}/></p>
         <p>남가 : <input type = "text" value = {input.southName} name="southName" onChange={onChangeInput}/>, 
-        점수 : <input type = "text" value = {input.southScore} name = "southScore" onChange={onChangeInput}/></p> 
+        점수 : <input type = "number" step="1" value = {input.southScore} name = "southScore" onChange={onChangeInput}/></p> 
         <p>서가 : <input type = "text" value = {input.westName} name="westName" onChange={onChangeInput}/>, 
-        점수 : <input type = "text" value = {input.westScore} name = "westScore" onChange={onChangeInput}/></p> 
+        점수 : <input type = "number" step="1" value = {input.westScore} name = "westScore" onChange={onChangeInput}/></p> 
         <p>북가 : <input type = "text" value = {input.northName} name="northName" onChange={onChangeInput}/>, 
-        점수 : <input type = "text" value = {input.northScore} name = "northScore" onChange={onChangeInput}/></p> 
-        <p>점수 합계 : ${scoreSum}{scoreSum != 0 ? " 점수 합계가 맞지 않습니다." : ""}</p>
+        점수 : <input type = "number" step="1" value = {input.northScore} name = "northScore" onChange={onChangeInput}/></p> 
+        <p>점수 합계 : {scoreSum}</p>
+        <p style={{color: 'red'}}>{scoreSum != 0 ? " 점수 합계가 맞지 않습니다." : ""}</p>
       </section>
       <section className="button_section">
         <Button onClick={() => nav(-1)} text={"취소하기"} />

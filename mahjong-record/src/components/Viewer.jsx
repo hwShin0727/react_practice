@@ -9,7 +9,7 @@ const Viewer = ({ content }) => {
           <p>{`남가 : ${content.southName}, ${content.southScore}점`}</p>
           <p>{`서가 : ${content.westName}, ${content.westScore}점`}</p>
           <p>{`북가 : ${content.northName}, ${content.northScore}점`}</p>
-          <p>{`점수 합계 : ${content.eastScore + content.southScore + content.westScore + content.northScore} 점`}</p>
+          <p>{`점수 합계 : ${Number(content.eastScore) + Number(content.southScore) + Number(content.westScore) + Number(content.northScore) - 120000} 점`}</p>
         </div>
       </section>
     </div>

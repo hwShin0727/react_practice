@@ -1,4 +1,3 @@
-import "./App.css";
 import { useReducer, useRef } from "react";
 import { Routes, Route } from "react-router-dom";
 import { RecordStateContext, RecordDispatchContext } from "./Context";

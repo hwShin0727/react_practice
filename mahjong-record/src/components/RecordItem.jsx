@@ -5,7 +5,7 @@ import Button from "./Button";
 클릭 시 일기 상세 페이지로 이동하거나,
 "수정하기" 버튼 클릭 시 일기 수정 페이지로 이동하게 하는 구조
 */
-const RecordItem = ({ id, createdDate, gameType, content }) => {
+const RecordItem = ({ id, createdDate, gameType, eastName, eastScore, southName, southScore, westName, westScore, northName, northScore }) => {
   const nav = useNavigate();
 
   const goRecordPage = () => {
@@ -19,7 +19,7 @@ const RecordItem = ({ id, createdDate, gameType, content }) => {
   return (
     <div className="DiaryItem">
       <div onClick={goRecordPage}>
-        대국 번호 : ${id}, 대국 타입 : ${gameType}
+        대국 번호 : {id}, 대국 타입 : {gameType}
       </div>
       <div onClick={goRecordPage} className="info_section">
         <div className="created_date">
@@ -27,10 +27,10 @@ const RecordItem = ({ id, createdDate, gameType, content }) => {
         </div>
         <div className="content">
           <p>대국 결과 :</p>
-          <p>동가 : ${content.eastName}, {content.eastScore}</p>
-          <p>남가 : ${content.southName}, {content.southScore}</p>
-          <p>서가 : ${content.westName}, {content.westScore}</p>
-          <p>북가 : ${content.northName}, {content.northScore}</p>
+          <p>동가 : {eastName}, {eastScore}</p>
+          <p>남가 : {southName}, {southScore}</p>
+          <p>서가 : {westName}, {westScore}</p>
+          <p>북가 : {northName}, {northScore}</p>
           </div>
       </div>
       <div className="button_section">

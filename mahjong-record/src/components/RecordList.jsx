@@ -43,7 +43,11 @@ const RecordList = ({ data }) => {
             </div>
             <div className="list_wrapper">
                 {sortedData.map((item) => (
-                    <RecordItem key={item.id} {...item} />
+                    <RecordItem id={item.id} createdDate={item.createdDate} gameType={item.gameType}
+                    eastName={item.eastName} eastScore={item.eastScore}
+                    southName={item.southName} southScore={item.southScore}
+                    westName={item.westName} westScore={item.westScore}
+                    northName={item.northName} northScore={item.northScore} />
                 ))}
             </div>
         </div>
