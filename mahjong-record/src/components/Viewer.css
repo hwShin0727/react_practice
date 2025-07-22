@@ -46,12 +46,12 @@
 }
 
 /* 마지막 줄(합계)은 강조 */
-.Viewer .content_wrapper p:last-child {
+/* .Viewer .content_wrapper p:last-child {
   color: #d01919;
   font-weight: bold;
   font-size: 1.11rem;
   margin-top: 14px;
-}
+} */
 
 /* 모바일 */
 @media(max-width: 500px) {

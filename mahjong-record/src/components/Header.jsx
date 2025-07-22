@@ -1,6 +1,5 @@
 import './Header.css';
 
-//페이지 상단 구성하는 컴포넌트
 const Header = ({ title, leftChild, rightChild }) => {
   return (
     <header className="Header">

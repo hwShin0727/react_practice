@@ -1,6 +1,11 @@
 import './Viewer.css';
+import Button from './Button'
+import { useParams, useNavigate } from "react-router-dom";
 
 const Viewer = ({ content }) => {
+
+  const params = useParams();
+  const nav = useNavigate();
   
   return (
     <div className="Viewer">
@@ -13,6 +18,10 @@ const Viewer = ({ content }) => {
           <p>{`북가 : ${content.northName}, ${content.northScore}점`}</p>
           <p>{`점수 합계 : ${Number(content.eastScore) + Number(content.southScore) + Number(content.westScore) + Number(content.northScore) - 120000} 점`}</p>
         </div>
+      </section>
+      <section className="button_section">
+        <Button onClick={() => nav(-1)} text={"돌아가기"} type="secondary"/>
+        <Button onClick={() => nav(`/edit/${params.id}`)} text={"수정하기"} type="primary"/>
       </section>
     </div>
   );

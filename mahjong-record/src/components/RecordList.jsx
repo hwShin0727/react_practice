@@ -4,18 +4,15 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import './RecordList.css';
 
-//일기들을 정렬 선택 메유, 새 일기 쓰기를 제공하는 컴포넌트
 const RecordList = ({ data }) => {
     const nav = useNavigate();
-    //sortType은 일기 정렬 기준(latest, oldest(오른차순))
+
     const [sortType, setSortType] = useState("latest");
 
-    //일기 정렬
     const onChangeSortType = (e) => {
         setSortType(e.target.value);
     };
 
-    //정렬된 데이터 반환
     const getSortedData = () => {
         return data.toSorted((a, b) => {
             if (sortType === "oldest") {
@@ -36,11 +33,18 @@ const RecordList = ({ data }) => {
                     <option value={"latest"}>최신순</option>
                     <option value={"oldest"}>오래된 순</option>
                 </select>
+                <div className="menu_bar_button_div">
                 <Button
                     onClick={() => nav("/new")}
                     text={"기록 등록하기"}
                     type="primary"
                 />
+                <Button
+                    onClick={() => nav("/ranking")}
+                    text={"월간 랭킹 보기"}
+                    type="primary"
+                />
+                </div>
             </div>
             <div className="list_wrapper">
                 {sortedData.map((item) => (

@@ -9,6 +9,7 @@
 .menu_bar {
   display: flex;
   justify-content: space-between;
+  /* justify-content: flex-end; */
   align-items: center;
   margin-bottom: 18px;
   gap: 12px;
@@ -28,6 +29,10 @@
 }
 .menu_bar select:focus {
   border: 1.6px solid #3478f6;
+}
+
+.menu_bar_button_div {
+  display: flex;
 }
 
 .menu_bar .Button {

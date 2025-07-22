@@ -20,7 +20,6 @@ const Edit = () => {
     if (
       window.confirm("기록을 삭제하시겠습니까? 삭제된 기록은 복구가 불가능합니다.")
     ) {
-      // 일기 삭제 로직
       onDelete(params.id);
       nav("/", { replace: true });
     }
@@ -49,18 +48,18 @@ const Edit = () => {
     <div className="EditPageWrap">
       <Header
         title={"기록 수정"}
-        leftChild={
-          <Button onClick={() => nav(-1)} text={"< 뒤로 가기"} type="secondary" />
-        }
-        rightChild={
-          <Button
-            onClick={onClickDelete}
-            text={"기록 삭제"}
-            type="danger"
-          />
-        }
+        // leftChild={
+        //   <Button onClick={() => nav(-1)} text={"< 뒤로 가기"} type="secondary" />
+        // }
+        // rightChild={
+        //   <Button
+        //     onClick={onClickDelete}
+        //     text={"기록 삭제"}
+        //     type="danger"
+        //   />
+        // }
       />
-      <Editor initData={curRecordItem} onSubmit={onSubmit} />
+      <Editor initData={curRecordItem} onSubmit={onSubmit} onDelete={onClickDelete} />
     </div>
   );
 };

@@ -101,7 +101,6 @@ function App() {
   const [data, dispatch] = useReducer(reducer, mockData);
   const idRef = useRef(9);
 
-  // 새로운 일기 추가
   const onCreate = (createdDate, gameType, eastName, eastScore, southName, southScore,
     westName, westScore, northName, northScore
   ) => {
@@ -123,7 +122,6 @@ function App() {
     });
   };
 
-  // 기존 일기 수정
   const onUpdate = (id, createdDate, gameType, eastName, eastScore, southName, southScore,
     westName, westScore, northName, northScore
   ) => {
@@ -145,7 +143,6 @@ function App() {
     });
   };
 
-  // 기존 일기 삭제
   const onDelete = (id) => {
     dispatch({
       type: "DELETE",
@@ -172,6 +169,7 @@ function App() {
             <Route path="/new" element={<New />} />
             <Route path="/record/:id" element={<Record />} />
             <Route path="/edit/:id" element={<Edit />} />
+            {/* <Route path="/ranking/:year/:month" element={<Ranking />}/> */}
             <Route path="*" element={<Notfound />} />
           </Routes>
         </RecordDispatchContext.Provider>
