@@ -16,8 +16,9 @@ mongoose.connect('mongodb://localhost:27017/mj_record', {
 const GameRecordSchema = new mongoose.Schema({
     game_id : {type : Number, required : true, unique : true},
     game_type : {type : String, required : true, default : "반장전"},
+    played_at : {type : Date, required : true, default : Date.now},
     players : {
-        type : [{player_name : String, player_score : Number}],
+        type : [{player_wind : String, player_name : String, player_score : Number}],
         required : true
     },
     modified_at : {type : Date, required : false, default : Date.now},

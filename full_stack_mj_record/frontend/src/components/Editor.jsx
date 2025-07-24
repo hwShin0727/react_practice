@@ -80,12 +80,11 @@ const Editor = ({ initData, onSubmit, onDelete }) => {
         <p>북가 : <input type = "text" value = {input.northName} name="northName" onChange={onChangeInput}/>, 
         점수 : <input type = "number" step="1" value = {input.northScore} name = "northScore" onChange={onChangeInput}/></p> 
         <p>점수 합계 : {scoreSum}</p>
-        <p style={{color: 'red'}}>{scoreSum != 0 ? "점수 합계가 맞지 않습니다." : ""}</p>
-        <p style={{color: 'red'}}>{checkDuplicateOrEmptyPlayer ? "대국자 이름이 중복되었거나 비어있습니다." : ""}</p>
+        <p style={{color: 'red'}}>{scoreSum != 0 || checkDuplicateOrEmptyPlayer ? "점수 합계가 맞지 않거나 대국자 이름이 잘못되었습니다." : ""}</p>
       </section>
       <section className="button_section">
         <Button onClick={() => nav(-1)} type="secondary" text={"돌아가기"} />
-        <Button onClick={onSubmitButtonClick} text={"확인"} type="primary"/>
+        <Button onClick={onSubmitButtonClick} text={"확인"} type="primary" disabled = {scoreSum != 0 || checkDuplicateOrEmptyPlayer}/>
         <Button onClick={onDeleteButtonClick} type="danger" text={"기록 삭제"} />        
       </section>
     </div>

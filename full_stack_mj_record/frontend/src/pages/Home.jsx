@@ -1,11 +1,13 @@
 import Header from "../components/Header";
 import Button from "../components/Button";
 import RecordList from "../components/RecordList";
-import { useState, useContext, useEffect } from "react";
-import { RecordStateContext } from "../Context";
+
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import { fetchRecords } from "../api/recordService"; //데이터베이스 연동 부분
 
 const getMonthlyData = (pivotDate, data) => {
+  
   const beginTime = new Date(
     pivotDate.getFullYear(),
     pivotDate.getMonth(),
@@ -24,53 +26,46 @@ const getMonthlyData = (pivotDate, data) => {
     59
   ).getTime();
 
+  console.log(data);
+  console.log(data.type);
+
   return data.filter(
     (item) =>
-      beginTime <= item.createdDate && item.createdDate <= endTime
+      beginTime <= item.played_at && item.playet_at <= endTime
   );
 };
 
 const Home = () => {
-  const data = useContext(RecordStateContext);
-  const [pivotDate, setPivotDate] = useState(new Date());
+  const nav = useNavigate();
+  const params = useParams();
+  const pivotDate = new Date(params.year, params.month - 1);
+
   //데이터베이스 연동 부분
   const [records, setRecords] = useState([]);
 
   useEffect(() => {
-    fetchRecords()
-      .then(res => setRecords(res.data))
-      .catch(err => console.error(err));
+    const fetchData = async() => {
+      setRecords(await fetchRecords());
+    }
   }, []);
+
   //--------------------------------------
-  const monthlyData = getMonthlyData(pivotDate, data);
-
-  const onIncreaseMonth = () => {
-    setPivotDate(
-      new Date(pivotDate.getFullYear(), pivotDate.getMonth() + 1)
-    );
-  };
-
-  const onDecreaseMonth = () => {
-    setPivotDate(
-      new Date(pivotDate.getFullYear(), pivotDate.getMonth() - 1)
-    );
-  };
+  const monthlyData = getMonthlyData(pivotDate, records);
 
   return (
     <div>
       <Header
-        title={`${pivotDate.getFullYear()}년 ${
-          pivotDate.getMonth() + 1
-        }월 대국 기록`}
-        leftChild={<Button onClick={onDecreaseMonth} type="secondary" text={"<"} />}
-        rightChild={<Button onClick={onIncreaseMonth} type="secondary" text={">"} />}
+        title={`${pivotDate.getFullYear()}년 ${pivotDate.getMonth() + 1}월 대국 기록`}
+        leftChild={<Button onClick={() => {
+          const prevMonth = new Date(pivotDate.getFullYear(), pivotDate.getMonth() - 1);
+          nav(`/${prevMonth.getFullYear()}/${prevMonth.getMonth() + 1}`, {replace : true});
+        }} type="secondary" text={"<"} />}
+        rightChild={<Button onClick={() => {
+          const nextMonth = new Date(pivotDate.getFullYear(), pivotDate.getMonth() + 1);
+          nav(`/${nextMonth.getFullYear()}/${nextMonth.getMonth() + 1}`, {replace : true});
+        }} type="secondary" text={">"} />}
       />
-      <RecordList data={monthlyData} />
-      {/* 데이터베이스 연동 부분 */}
-      {records.map(d => (
-        <div key={d.id}>{d.createdDate}</div>
-      ))}
-
+      <RecordList year = {params.year} month = {params.month} data={monthlyData} />
     </div>
   );
 };

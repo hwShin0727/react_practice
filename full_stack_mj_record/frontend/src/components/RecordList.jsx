@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import './RecordList.css';
 
-const RecordList = ({ data }) => {
+const RecordList = ({ year, month, data }) => {
     const nav = useNavigate();
 
     const [sortType, setSortType] = useState("latest");
@@ -40,7 +40,7 @@ const RecordList = ({ data }) => {
                     type="primary"
                 />
                 <Button
-                    onClick={() => nav("/ranking")}
+                    onClick={() => nav(`/ranking/${year}/${month}`)}
                     text={"월간 랭킹 보기"}
                     type="primary"
                 />

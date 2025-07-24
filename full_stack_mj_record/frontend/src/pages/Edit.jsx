@@ -1,6 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
-import Button from "../components/Button";
 import Editor from "../components/Editor";
 import { useContext } from "react";
 import { RecordDispatchContext} from "../Context";
@@ -48,16 +47,6 @@ const Edit = () => {
     <div className="EditPageWrap">
       <Header
         title={"기록 수정"}
-        // leftChild={
-        //   <Button onClick={() => nav(-1)} text={"< 뒤로 가기"} type="secondary" />
-        // }
-        // rightChild={
-        //   <Button
-        //     onClick={onClickDelete}
-        //     text={"기록 삭제"}
-        //     type="danger"
-        //   />
-        // }
       />
       <Editor initData={curRecordItem} onSubmit={onSubmit} onDelete={onClickDelete} />
     </div>

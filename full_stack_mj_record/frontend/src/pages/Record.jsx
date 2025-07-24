@@ -1,20 +1,21 @@
 import {useParams} from "react-router-dom";
+
 import Header from "../components/Header";
 import Viewer from "../components/Viewer";
 import useRecord from "../hooks/useRecord";
+
 import { getStringedDate } from "../util/get-stringed-date";
 
 const Record = () => {
   const params = useParams();
   // const nav = useNavigate();
-
   const curRecordItem = useRecord(params.id);
 
   if (!curRecordItem) {
     return <div>데이터 로딩중...!</div>;
   }
 
-  const { id, createdDate, gameType, eastName, eastScore, southName, southScore, westName, westScore, northName, northScore } = curRecordItem;
+  const { id, , gameType, played } = curRecordItem;
   const playDate = getStringedDate(new Date(createdDate));
   const content = {
     eastName: eastName,
