@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import Button from "./Button";
-import './RecordItem.css';
+import './style/RecordItem.css';
 
 const RecordItem = ({item}) => {
   const nav = useNavigate();

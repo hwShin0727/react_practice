@@ -2,7 +2,7 @@ import Button from "./Button";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getStringedDate } from "../util/get-stringed-date";
-import "./Editor.css";
+import "./style/Editor.css";
 
 const seat = ["동", "남", "서", "북"];
 
@@ -16,7 +16,7 @@ const Editor = ({ initData, onSubmit, onDelete}) => {
       {player_wind : "서", player_name : "", player_score : 30000},
       {player_wind : "북", player_name : "", player_score : 30000}
     ],
-    modified_at : new Date(),
+    modified_at : null,
     is_deleted : false
   });
 
@@ -51,7 +51,7 @@ const Editor = ({ initData, onSubmit, onDelete}) => {
       modified_at : new Date()
     };
     setInput(to_submit);
-    onSubmit(input);
+    onSubmit(to_submit);
   }
 
   const onDeleteButtonClick = () => {

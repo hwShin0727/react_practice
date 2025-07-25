@@ -2,7 +2,7 @@ import Button from "./Button";
 import RecordItem from "./RecordItem";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import './RecordList.css';
+import './style/RecordList.css';
 
 const RecordList = ({ year, month, data }) => {
     const nav = useNavigate();

@@ -1,0 +1,229 @@
+/* 랭킹 테이블 섹션 */
+.ranking_section {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 14px;
+  box-sizing: border-box;
+}
+
+/* 버튼 섹션 - 정렬 옵션과 돌아가기 버튼 */
+.ranking_section .button_section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+  gap: 12px;
+}
+
+.ranking_section .button_section select {
+  padding: 7px 13px;
+  border: 1.6px solid #3478f6;
+  border-radius: 7px;
+  background: #fafdff;
+  font-size: 1rem;
+  color: #2159b2;
+  font-weight: 500;
+  outline: none;
+  transition: border 0.13s;
+  min-width: 120px;
+}
+
+.ranking_section .button_section select:focus {
+  border: 1.6px solid #3478f6;
+}
+
+.ranking_section table {
+  width: 100%;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(52, 120, 246, 0.07);
+  border-collapse: collapse;
+  overflow: hidden;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* 테이블 헤더 */
+.ranking_section thead {
+  background: #f4f8ff;
+}
+
+.ranking_section th {
+  padding: 20px 24px;
+  text-align: center;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #2159b2;
+  letter-spacing: 0.3px;
+  border: 2px solid #e8efff;
+}
+
+.ranking_section th:first-child {
+  padding-left: 25px;
+}
+
+/* 테이블 바디 */
+.ranking_section tbody tr {
+  transition: background 0.15s;
+}
+
+.ranking_section td {
+  padding: 18px 24px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #232a33;
+  border: 2px solid #e8efff;
+}
+
+.ranking_section td:first-child {
+  text-align: center;
+  padding-left: 28px;
+  font-weight: 700;
+  color: #2159b2;
+}
+
+.ranking_section td:nth-child(2) {
+  font-weight: 600;
+  color: #2159b2;
+}
+
+/* 퍼센트 컬럼 스타일링 */
+.ranking_section td:nth-child(n+7) {
+  font-weight: 500;
+  color: #27418b;
+}
+
+/* 1위, 2위, 3위 행 강조 */
+.ranking_section tbody tr:nth-child(1) {
+  background: linear-gradient(135deg, #fff3cd, #fef9e7);
+  border-left: 4px solid #ffc107;
+}
+
+.ranking_section tbody tr:nth-child(1) td {
+  color: #856404;
+  font-weight: 600;
+  border: 2px solid #e6d29a;
+}
+
+.ranking_section tbody tr:nth-child(1) td:first-child {
+  color: #ffc107;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.ranking_section tbody tr:nth-child(1) td:nth-child(2) {
+  color: #856404;
+  font-weight: 700;
+}
+
+.ranking_section tbody tr:nth-child(2) {
+  background: linear-gradient(135deg, #e2e3e5, #f8f9fa);
+  border-left: 4px solid #6c757d;
+}
+
+.ranking_section tbody tr:nth-child(2) td {
+  color: #495057;
+  font-weight: 600;
+  border: 2px solid #6c757d;
+}
+
+.ranking_section tbody tr:nth-child(2) td:first-child {
+  color: #6c757d;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.ranking_section tbody tr:nth-child(2) td:nth-child(2) {
+  color: #495057;
+  font-weight: 700;
+}
+
+.ranking_section tbody tr:nth-child(3) {
+  background: linear-gradient(135deg, #f8d7da, #fde7e9);
+  border-left: 4px solid #dc3545;
+}
+
+.ranking_section tbody tr:nth-child(3) td {
+  color: #721c24;
+  font-weight: 600;
+  border: 2px solid #e2a6aa;
+}
+
+.ranking_section tbody tr:nth-child(3) td:first-child {
+  color: #dc3545;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.ranking_section tbody tr:nth-child(3) td:nth-child(2) {
+  color: #721c24;
+  font-weight: 700;
+}
+
+/* 모바일 대응 */
+@media (max-width: 768px) {
+  .ranking_section .button_section {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 15px;
+  }
+  
+  .ranking_section .button_section select {
+    width: 100%;
+    margin: 0;
+  }
+  
+  .ranking_section {
+    padding: 0 8px;
+  }
+  
+  .ranking_section table {
+    min-width: 700px;
+    font-size: 0.85rem;
+    overflow-x: auto;
+  }
+  
+  .ranking_section th,
+  .ranking_section td {
+    padding: 12px 10px;
+    font-size: 0.8rem;
+  }
+  
+  .ranking_section th:first-child,
+  .ranking_section td:first-child {
+    padding-left: 16px;
+    min-width: 50px;
+  }
+  
+  .ranking_section td:nth-child(2) {
+    min-width: 80px;
+  }
+}
+
+@media (max-width: 480px) {
+  .ranking_section {
+    padding: 0 4px;
+    overflow-x: auto;
+  }
+  
+  .ranking_section table {
+    min-width: 600px;
+    font-size: 0.75rem;
+  }
+  
+  .ranking_section th,
+  .ranking_section td {
+    padding: 10px 8px;
+    font-size: 0.75rem;
+  }
+  
+  .ranking_section th:first-child,
+  .ranking_section td:first-child {
+    padding-left: 12px;
+    min-width: 45px;
+  }
+  
+  .ranking_section td:nth-child(2) {
+    min-width: 70px;
+  }
+}

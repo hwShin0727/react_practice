@@ -17,7 +17,7 @@
 
 .menu_bar select {
   padding: 7px 13px;
-  border: 1.2px solid #b8d2f6;
+  border: 1.6px solid #3478f6;
   border-radius: 7px;
   background: #fafdff;
   font-size: 1rem;
@@ -40,6 +40,7 @@
 }
 
 .list_wrapper {
+  border-radius: 7px;
   display: flex;
   flex-direction: column;
   gap: 13px;

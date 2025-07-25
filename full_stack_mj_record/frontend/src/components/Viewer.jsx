@@ -1,4 +1,4 @@
-import './Viewer.css';
+import './style/Viewer.css';
 import Button from './Button'
 import { useParams, useNavigate } from "react-router-dom";
 
