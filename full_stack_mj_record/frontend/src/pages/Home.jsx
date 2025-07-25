@@ -2,9 +2,9 @@ import Header from "../components/Header";
 import Button from "../components/Button";
 import RecordList from "../components/RecordList";
 
-import { useState, useEffect } from "react";
+import { useContext } from "react";
+import { RecordStateContext } from "../Context";
 import { useParams, useNavigate } from "react-router-dom";
-import { fetchRecords } from "../api/recordService"; //데이터베이스 연동 부분
 
 const getMonthlyData = (pivotDate, data) => {
   
@@ -26,28 +26,19 @@ const getMonthlyData = (pivotDate, data) => {
     59
   ).getTime();
 
-  console.log(data);
-  console.log(data.type);
-
   return data.filter(
-    (item) =>
-      beginTime <= item.played_at && item.playet_at <= endTime
+    (item) => {
+      const played_time = new Date(item.played_at).getTime();
+      return !item.is_deleted && beginTime <= played_time && played_time <= endTime;
+    }
   );
 };
 
 const Home = () => {
+  const records = useContext(RecordStateContext);
   const nav = useNavigate();
   const params = useParams();
   const pivotDate = new Date(params.year, params.month - 1);
-
-  //데이터베이스 연동 부분
-  const [records, setRecords] = useState([]);
-
-  useEffect(() => {
-    const fetchData = async() => {
-      setRecords(await fetchRecords());
-    }
-  }, []);
 
   //--------------------------------------
   const monthlyData = getMonthlyData(pivotDate, records);

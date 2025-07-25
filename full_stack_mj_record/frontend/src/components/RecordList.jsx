@@ -15,10 +15,13 @@ const RecordList = ({ year, month, data }) => {
 
     const getSortedData = () => {
         return data.toSorted((a, b) => {
+            const a_time = new Date(a.played_at).getTime();
+            const b_time = new Date(b.played_at).getTime();
+
             if (sortType === "oldest") {
-                return Number(a.createdDate) - Number(b.createdDate);
+                return a_time - b_time;
             } else {
-                return Number(b.createdDate) - Number(a.createdDate);
+                return b_time - a_time;
             }
         });
     };
@@ -47,12 +50,10 @@ const RecordList = ({ year, month, data }) => {
                 </div>
             </div>
             <div className="list_wrapper">
-                {sortedData.map((item) => (
-                    <RecordItem id={item.id} createdDate={item.createdDate} gameType={item.gameType}
-                    eastName={item.eastName} eastScore={item.eastScore}
-                    southName={item.southName} southScore={item.southScore}
-                    westName={item.westName} westScore={item.westScore}
-                    northName={item.northName} northScore={item.northScore} />
+                {sortedData
+                    .filter(item => !item.is_deleted)
+                    .map((item) => (
+                    <RecordItem key = {item.game_id} item = {item}/>
                 ))}
             </div>
         </div>

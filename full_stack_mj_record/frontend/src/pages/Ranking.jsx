@@ -1,7 +1,12 @@
 import Header from "../components/Header";
 import Button from "../components/Button";
 import { useNavigate, useParams } from "react-router-dom";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { RecordStateContext } from "../Context";
+
+const sort_types = [
+    "1위율", "2위율", "3위율", "4위율", "대국수"
+];
 
 const Ranking = () => {
 
@@ -16,8 +21,8 @@ const Ranking = () => {
             0
         );
 
-    const [records, setRecords] = useState([]);
-    const [sortType, setSortType] = useState("1위율");
+    const records = useContext(RecordStateContext);
+    const [sortType, setSortType] = useState(sort_types[0]);
 
     const onChangeSortType = (e) => {
         setSortType(e.target.value);
@@ -25,38 +30,49 @@ const Ranking = () => {
 
     const getSortedPlayerData = () => {
         return playerData.toSorted((a, b) => {
-            if (sortType === "oldest") {
-                return Number(a.createdDate) - Number(b.createdDate);
-            } else {
-                return Number(b.createdDate) - Number(a.createdDate);
+            switch(sortType) {
+                case "1위율" :
+                    return;
+                case "2위율" :
+                    return;
+                case "3위율" :
+                    return;
+                case "4위율" :
+                    return;
+                case "대국수" :
+                    return;
             }
         });
     };
 
-    // const getMonthlyData = (pivotDate, playerData) => {
-    //     const beginTime = new Date(
-    //         pivotDate.getFullYear(),
-    //         pivotDate.getMonth(),
-    //         1,
-    //         0,
-    //         0,
-    //         0
-    //     ).getTime();
+    const getMonthlyData = (pivotDate, data) => {
+        const beginTime = new Date(
+            pivotDate.getFullYear(),
+            pivotDate.getMonth(),
+            1,
+            0,
+            0,
+            0
+        ).getTime();
 
-    //     const endTime = new Date(
-    //         pivotDate.getFullYear(),
-    //         pivotDate.getMonth() + 1,
-    //         0,
-    //         23,
-    //         59,
-    //         59
-    //     ).getTime();
+        const endTime = new Date(
+            pivotDate.getFullYear(),
+            pivotDate.getMonth() + 1,
+            0,
+            23,
+            59,
+            59
+        ).getTime();
 
-    //     return data.filter(
-    //         (item) =>
-    //         beginTime <= item.createdDate && item.createdDate <= endTime
-    //     );
-    // };
+        return data.filter(
+            (item) => {
+                const play_time = new Date(item.played_at).getTime();
+                return !item.is_deleted && beginTime <= play_time && play_time <= endTime;
+            }
+        );
+    };
+
+    const month_records = getMonthlyData(pivotDate, records);
     // const sortedData = getSortedData();
 
     return (
@@ -70,14 +86,18 @@ const Ranking = () => {
                 const nextMonth = new Date(pivotDate.getFullYear(), pivotDate.getMonth() + 1);
                 nav(`/ranking/${nextMonth.getFullYear()}/${nextMonth.getMonth() + 1}`, {replace : true});
             }} type="secondary" text={">"} />}/>
-            <div className = "ranking_section">
-
-
-
-            </div>
-            <footer className= "footer_button">
+            <div className = "button_section">
+                <select value = {sortType} onChange = {onChangeSortType}>
+                    {
+                        sort_types.map((type, index) => {
+                            return <option key = {index} value = {type}>{type}</option>
+                        })
+                    }
+                </select>
                 <Button onClick = {() => nav(`/${pivotDate.getFullYear()}/${pivotDate.getMonth() + 1}`, {replace : true})} text = {"돌아가기"} type = {"secondary"}/>
-            </footer>
+            </div>
+            <div className = "ranking_section">
+            </div>
         </>
     );
 };

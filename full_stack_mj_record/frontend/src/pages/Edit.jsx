@@ -8,19 +8,26 @@ import useRecord from "../hooks/useRecord";
 const Edit = () => {
   const params = useParams();
   const nav = useNavigate();
-  const { onDelete, onUpdate } = useContext(RecordDispatchContext);
+  const { onUpdate } = useContext(RecordDispatchContext);
   const curRecordItem = useRecord(params.id);
 
-  if (!curRecordItem) {
+  if (!curRecordItem || curRecordItem.is_deleted) {
     return <div>해당 대국 기록을 찾을 수 없습니다.</div>;
   }
 
-  const onClickDelete = () => {
+  const onClickDelete = (input) => {
     if (
       window.confirm("기록을 삭제하시겠습니까? 삭제된 기록은 복구가 불가능합니다.")
     ) {
-      onDelete(params.id);
-      nav("/", { replace: true });
+      onUpdate(
+        params.id,
+        input.game_type,
+        input.played_at,
+        input.players,
+        input.modified_at,
+        input.is_deleted
+      );
+      nav(`/${input.played_at.getFullYear()}/${input.played_at.getMonth() + 1}`, { replace: true });
     }
   };
 
@@ -28,18 +35,13 @@ const Edit = () => {
     if (window.confirm("기록을 수정하시겠습니까?")) {
       onUpdate(
         params.id,
-        input.createdDate.getTime(),
-        input.gameType,
-        input.eastName,
-        input.eastScore,
-        input.southName,
-        input.southScore,
-        input.westName,
-        input.westScore,
-        input.northName,
-        input.northScore
+        input.game_type,
+        input.played_at,
+        input.players,
+        input.modified_at,
+        input.is_deleted
       );
-      nav("/", { replace: true });
+      nav(`/${input.played_at.getFullYear()}/${input.played_at.getMonth() + 1}`, { replace: true });
     }
   };
 

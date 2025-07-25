@@ -35,17 +35,18 @@ app.get('/game-records', async(req, res) => {
 
 // 게임 기록 등록
 app.post('/game-records', async(req, res) => {
-    const {game_id, game_type, players} = req.body;
-    const newGameRecord = new GameRecord({game_id, game_type, players});
+    const {game_id, game_type, played_at, players, modified_at, is_deleted} = req.body;
+    const newGameRecord = new GameRecord({game_id, game_type, played_at, players, modified_at, is_deleted});
     await newGameRecord.save();
     res.json({message : "기록 등록 완료"}); 
 });
 
 // 수정(삭제)
 app.put('/game-records/:id', async (req, res) => {
-  const { id } = req.params;
-  const {game_id, game_type, players, modified_at, is_deleted} = req.body;
-  await GameRecord.findByIdAndUpdate(id, {game_id, game_type, players, modified_at, is_deleted});
+  const id = Number(req.params.id);
+  const {game_id, game_type, played_at, players, modified_at, is_deleted} = req.body;
+  console.log({game_id, game_type, played_at, players, modified_at, is_deleted});
+  await GameRecord.findOneAndUpdate({game_id : id}, {game_id, game_type, played_at, players, modified_at, is_deleted});
   if(is_deleted) {
     res.json({message : "기록 삭제 완료"});
   } else {

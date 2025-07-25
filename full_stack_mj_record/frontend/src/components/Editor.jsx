@@ -4,14 +4,20 @@ import { useNavigate } from "react-router-dom";
 import { getStringedDate } from "../util/get-stringed-date";
 import "./Editor.css";
 
-const Editor = ({ initData, onSubmit, onDelete }) => {
+const seat = ["동", "남", "서", "북"];
+
+const Editor = ({ initData, onSubmit, onDelete}) => {
   const [input, setInput] = useState({
-    createdDate: new Date(),
-    gameType: "반장전",
-    eastName: "", eastScore: 30000,
-    southName: "", southScore: 30000,
-    westName: "", westScore: 30000,
-    northName: "", northScore: 30000,
+    played_at: new Date(),
+    game_type: "반장전",
+    players : [
+      {player_wind : "동", player_name : "", player_score : 30000},
+      {player_wind : "남", player_name : "", player_score : 30000},
+      {player_wind : "서", player_name : "", player_score : 30000},
+      {player_wind : "북", player_name : "", player_score : 30000}
+    ],
+    modified_at : new Date(),
+    is_deleted : false
   });
 
   const nav = useNavigate();
@@ -20,7 +26,7 @@ const Editor = ({ initData, onSubmit, onDelete }) => {
     if (initData) {
       setInput({
         ...initData,
-        createdDate: new Date(Number(initData.createdDate)),
+        played_at : new Date(initData.played_at),
       });
     }
   }, [initData]);
@@ -29,7 +35,7 @@ const Editor = ({ initData, onSubmit, onDelete }) => {
     let name = e.target.name;
     let value = e.target.value;
 
-    if (name === "createdDate") {
+    if (name === "played_at") {
       value = new Date(value);
     }
 
@@ -40,52 +46,122 @@ const Editor = ({ initData, onSubmit, onDelete }) => {
   };
 
   const onSubmitButtonClick = () => {
+    const to_submit = {
+      ...input,
+      modified_at : new Date()
+    };
+    setInput(to_submit);
     onSubmit(input);
   }
 
   const onDeleteButtonClick = () => {
-    onDelete();
+    const to_delete = {
+      ...input,
+      modified_at : new Date(),
+      is_deleted : true
+    };
+    setInput(to_delete);
+    onDelete(to_delete);
   }
 
-  const scoreSum = Number(input.eastScore) + Number(input.southScore) + Number(input.westScore) + Number(input.northScore) - 120000;
-  const checkDuplicateOrEmptyPlayer = input.eastName === "" || input.southName === "" || input.westName === "" || input.northName === "" || input.eastName === input.southName || input.eastName === input.westName || input.eastName === input.northName ||
-                          input.southName === input.westName || input.southName === input.northName || input.westName === input.northName;
+  let sum = 0;
+  let check_player = false;
+  const players = input.players;
+  const maxIndex = players.length;
+
+  players.forEach((player, index) => {
+      sum += Number(player.player_score);
+      check_player |= player.player_name === "";
+
+      const player_seat_index = seat.indexOf(player.player_wind);
+
+      players.slice(index + 1, maxIndex).forEach(inner_player => {
+        const inner_seat_index = seat.indexOf(inner_player.player_wind);
+        check_player |= 
+          player.player_name === inner_player.player_name ||
+          player.player_wind === inner_player.player_wind ||
+          player.player_score < inner_player.player_score ||
+          player.player_score == inner_player.player_score && player_seat_index >= inner_seat_index;
+      });
+  });
+  
+  sum -= 120000;
  
   return (
     <div className="Editor">
       <section className="date_section">
         <h4>대국 일자</h4>
         <input
-          name="createdDate"
+          name="played_at"
           onChange={onChangeInput}
-          value={getStringedDate(input.createdDate)}
+          value={getStringedDate(input.played_at)}
           type="date"
         />
       </section>
       <section>
         <h4>대국 타입</h4>
-        <select onChange={onChangeInput} value={input.gameType}>
+        <select onChange={onChangeInput} name = "game_type" value={input.game_type}>
           <option value = "동풍전">동풍전</option>
           <option value = "반장전">반장전</option>
         </select>
       </section>
       <section className="content_section">
         <h4>대국 결과</h4>
-        <p>동가 : <input type = "text" value = {input.eastName} name="eastName" onChange={onChangeInput}/>, 
-        점수 : <input type = "number" step="1" value = {input.eastScore} name = "eastScore" onChange={onChangeInput}/></p>
-        <p>남가 : <input type = "text" value = {input.southName} name="southName" onChange={onChangeInput}/>, 
-        점수 : <input type = "number" step="1" value = {input.southScore} name = "southScore" onChange={onChangeInput}/></p> 
-        <p>서가 : <input type = "text" value = {input.westName} name="westName" onChange={onChangeInput}/>, 
-        점수 : <input type = "number" step="1" value = {input.westScore} name = "westScore" onChange={onChangeInput}/></p> 
-        <p>북가 : <input type = "text" value = {input.northName} name="northName" onChange={onChangeInput}/>, 
-        점수 : <input type = "number" step="1" value = {input.northScore} name = "northScore" onChange={onChangeInput}/></p> 
-        <p>점수 합계 : {scoreSum}</p>
-        <p style={{color: 'red'}}>{scoreSum != 0 || checkDuplicateOrEmptyPlayer ? "점수 합계가 맞지 않거나 대국자 이름이 잘못되었습니다." : ""}</p>
+            {input.players.map((player, index) => (
+              <p key={index}>
+                {index + 1}위 : {" "}
+                <input
+                  type="text"
+                  value={player.player_name}
+                  onChange={e => {
+                    const updatedPlayers = [...input.players];
+                    updatedPlayers[index] = {
+                      ...updatedPlayers[index],
+                      player_name: e.target.value
+                    };
+                    setInput(prev => ({ ...prev, players: updatedPlayers }));
+                  }}
+                />
+                , 점수 : {" "}
+                <input
+                  type="number"
+                  step="100"
+                  value={player.player_score}
+                  onChange={e => {
+                    const updatedPlayers = [...input.players];
+                    updatedPlayers[index] = {
+                      ...updatedPlayers[index],
+                      player_score: Number(e.target.value)
+                    };
+                    setInput(prev => ({ ...prev, players: updatedPlayers }));
+                  }}
+                />
+                <select
+                  value={player.player_wind}
+                  onChange={e => {
+                    const updatedPlayers = [...input.players];
+                    updatedPlayers[index] = {
+                      ...updatedPlayers[index],
+                      player_wind: e.target.value
+                    };
+                    setInput(prev => ({ ...prev, players: updatedPlayers }));
+                  }}
+                >
+                  {seat.map(s => (
+                    <option key={s} value={s}>
+                      {s}
+                    </option>
+                  ))}
+                </select>
+              </p>
+            ))}
+        <p>점수 합계 : {sum}</p>
+        <p style={{color: 'red'}}>{sum != 0 || check_player ? "점수 또는 대국자에 대한 입력이 잘못되었습니다." : ""}</p>
       </section>
       <section className="button_section">
         <Button onClick={() => nav(-1)} type="secondary" text={"돌아가기"} />
-        <Button onClick={onSubmitButtonClick} text={"확인"} type="primary" disabled = {scoreSum != 0 || checkDuplicateOrEmptyPlayer}/>
-        <Button onClick={onDeleteButtonClick} type="danger" text={"기록 삭제"} />        
+        <Button onClick={onSubmitButtonClick} text={"확인"} type = "primary" disabled = {sum != 0 || check_player}/>
+        <Button onClick={onDeleteButtonClick} text={"기록 삭제"} type = "danger"  disabled = {input.modified_at == null}/>        
       </section>
     </div>
   );

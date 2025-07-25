@@ -1,5 +1,4 @@
 import Header from "../components/Header";
-import Button from "../components/Button";
 import Editor from "../components/Editor";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
@@ -11,28 +10,18 @@ const New = () => {
 
   const onSubmit = (input) => {
     onCreate(
-      input.createdDate.getTime(),
-      input.gameType,
-      input.eastName,
-      input.eastScore,
-      input.southName,
-      input.southScore,
-      input.westName,
-      input.westScore,
-      input.northName,
-      input.northScore
+      input.game_type,
+      input.played_at,
+      input.players,
+      input.modified_at,
+      input.is_deleted,
     );
-    nav("/", { replace: true });
+    nav(`/${input.played_at.getFullYear()}/${input.played_at.getMonth() + 1}`, { replace: true });
   };
 
   return (
     <div>
-      <Header
-        title={"기록 등록하기"}
-        leftChild={
-          <Button onClick={() => nav(-1)} text={"< 뒤로 가기"} type="secondary"/>
-        }
-      />
+      <Header title={"기록 등록하기"} />
       <Editor onSubmit={onSubmit} />
     </div>
   );

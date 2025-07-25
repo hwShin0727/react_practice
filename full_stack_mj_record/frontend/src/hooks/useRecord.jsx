@@ -2,7 +2,7 @@ import { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { RecordStateContext } from "../Context";
 
-const useRecord = (id) => {
+const useRecord = (game_id) => {
     const data = useContext(RecordStateContext);
 
     const [curRecordItem, setCurRecordItem] = useState();
@@ -10,7 +10,7 @@ const useRecord = (id) => {
 
     useEffect(() => {
         const currentRecordItem = data.find(
-            (item) => String(item.id) === String(id)
+            (item) => String(item.game_id) === String(game_id) && !item.is_deleted
         );
         
         if (!currentRecordItem) {
@@ -19,7 +19,7 @@ const useRecord = (id) => {
         }
 
         setCurRecordItem(currentRecordItem);
-    }, [id, data, nav]);
+    }, [game_id, data, nav]);
     
     return curRecordItem;
 }

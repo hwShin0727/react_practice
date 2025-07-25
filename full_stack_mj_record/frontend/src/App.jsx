@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import { useReducer, useRef } from "react";
+import { useEffect, useReducer } from "react";
 
 import { RecordStateContext, RecordDispatchContext } from "./Context";
 
@@ -10,57 +10,72 @@ import New from "./pages/New";
 import Edit from "./pages/Edit";
 import Ranking from "./pages/Ranking"
 import Notfound from "./pages/Notfound";
-import { fetchRecords } from "./api/recordService";
+
+import { createRecord, updateRecord, fetchRecords } from "./api/recordService";
+
+const init = [];
+let game_count = 0;
 
 function reducer(state, action) {
 
   switch (action.type) {
-    case "CREATE":
-      return [action.data, ...state];
-    case "UPDATE":
-      return state.map((item) =>
-        String(item.id) === String(action.data.id) ? action.data : item);
-    default:
+    case "fetch" :
+      return action.data;
+    default :
       return state;
   }
 }
 
 function App() {
 
-  const [data, dispatch] = useReducer(reducer, fetchRecords);
-  const idRef = useRef(data.length);
+  const [data, dispatch] = useReducer(reducer, init);
+  
+  useEffect(() => {
+    async function load() {
+        const records = await fetchRecords();
+        dispatch({type : "fetch", data : records});
+        game_count = Math.max(game_count, records.length);
+    }
+    load();
+    }, []);
 
-  const onCreate = (game_type, played_at, players, modified_at, is_deleted) => {
-    dispatch({
-      type: "CREATE",
-      data: {
-        game_id : ++idRef.current,
+  const onCreate = async (game_type, played_at, players, modified_at, is_deleted) => {
+    const newData = {
+        game_id : ++game_count,
         game_type : game_type,
         played_at : played_at,
         players : players,
         modified_at : modified_at,
         is_deleted : is_deleted
-      },
-    });
+      };
+    
+      await createRecord(newData);
+
+      const updatedData = await fetchRecords();
+      
+      dispatch({type : "fetch", data : updatedData});
   };
 
-  const onUpdate = (game_id, game_type, played_at, players, modified_at, is_deleted) => {
-    dispatch({
-      type: "UPDATE",
-      data: {
+  const onUpdate = async (game_id, game_type, played_at, players, modified_at, is_deleted) => {
+    const targetData = {
         game_id : game_id,
         game_type : game_type,
         played_at : played_at,
         players : players,
         modified_at : modified_at,
         is_deleted : is_deleted
-      },
-    });
+    };
+
+    await updateRecord(game_id, targetData);
+    
+    const updatedData = await fetchRecords();
+
+    dispatch({type : "fetch", data : updatedData});
   };
 
   return (
     <>
-    <RecordStateContext.Provider value={data}> 
+    <RecordStateContext.Provider value = {data}> 
         {/* 전역 액션 함수: 세개의 함수를 언제든 사용할 수 있도록 저장 */}
         <RecordDispatchContext.Provider
           value={{

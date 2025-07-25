@@ -9,7 +9,7 @@ const Index = () => {
     useEffect(() => {    
         const today = new Date();
         nav(`/${today.getFullYear()}/${today.getMonth() + 1}`, {replace : true});
-    }, []);
-}
+    }, [nav]);
+};
 
 export default Index;
