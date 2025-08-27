@@ -149,10 +149,10 @@ const Ranking = () => {
                             <td>{second}</td>
                             <td>{third}</td>
                             <td>{fourth}</td>
-                            <td>{first / total * 100.00}%</td>
-                            <td>{second / total * 100.00}%</td>
-                            <td>{third / total * 100.00}%</td>
-                            <td>{fourth / total * 100.00}%</td>
+                            <td>{(first / total).toFixed(2)}</td>
+                            <td>{(second / total).toFixed(2)}</td>
+                            <td>{(third / total).toFixed(2)}</td>
+                            <td>{(fourth / total).toFixed(2)}</td>
                             </tr>
                         );
                         })}

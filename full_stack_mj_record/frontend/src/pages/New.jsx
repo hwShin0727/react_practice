@@ -21,7 +21,7 @@ const New = () => {
 
   return (
     <div>
-      <Header title={"기록 등록하기"} />
+      <Header title={"기록 등록"} />
       <Editor onSubmit={onSubmit} />
     </div>
   );
